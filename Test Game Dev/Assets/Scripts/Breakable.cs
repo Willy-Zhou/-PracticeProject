@@ -19,20 +19,22 @@ public class Breakable : MonoBehaviour
     }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        Player player = other.GetComponent<Player>();
+    private void OnCollisionEnter2D(Collision2D other) {
+        bool player = other.gameObject.name == "Player";
         if(player){
 
             breakallowed = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
-        Player player = other.GetComponent<Player>();
+    private void OnCollisionExit2D(Collision2D other) {
+        bool player = other.gameObject.name == "Player";
         if(player){
 
             breakallowed = false;
         }
 
     }
+
+    
 }

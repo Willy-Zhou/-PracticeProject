@@ -21,7 +21,7 @@ public class Killable : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Player player = other.GetComponent<Player>();
+        bool player = other.gameObject.name == "Player";
         if(player){
 
             killallowed = true;
@@ -29,7 +29,7 @@ public class Killable : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        Player player = other.GetComponent<Player>();
+        bool player = other.gameObject.name == "Player";
         if(player){
 
             killallowed = false;

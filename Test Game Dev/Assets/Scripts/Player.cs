@@ -6,44 +6,67 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     private BoxCollider2D boxCollider;
-    private Vector3 moveDelta;
-    private RaycastHit2D hit;
+    public Vector2 velocity;
+    private Rigidbody2D rigidbody2d;
+    private bool walk, walk_left, walk_right,jump;
 
     private void Start() {
         boxCollider = GetComponent<BoxCollider2D>();
+        rigidbody2d =transform.GetComponent<Rigidbody2D>();
+
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         // Reset MoveDelta
         
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+            CheckPlayerInput();
 
-        moveDelta = new Vector3(x,y,0);
+            UpdatePlayerPosition();
+    }
 
-        //Swap Sprite Direction
-        if (moveDelta.x > 0){
-            transform.localScale = Vector3.one;
-        } else if (moveDelta.x <0){
-            transform.localScale = new Vector3(-1,1,1);
+    void UpdatePlayerPosition(){
+        Vector3 pos = transform.localPosition;
+        Vector3 scale = transform.localScale;
+
+        if(walk){
+            if(walk_left){
+                pos.x -= velocity.x * Time.deltaTime;
+                scale.x=-1;
+            }
+            if(walk_right){
+                pos.x += velocity.x * Time.deltaTime;
+                scale.x = 1;
+            }
+            if (jump){
+                rigidbody2d.velocity = Vector2.up * velocity.y;
+            }
         }
-
-        
-
-        hit = Physics2D.BoxCast(transform.position,boxCollider.size,0,new Vector2(0,moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null){
-            //Make this thing move
-        transform.Translate(0, moveDelta.y * Time.deltaTime,0);
-        }
-
-        hit = Physics2D.BoxCast(transform.position,boxCollider.size,0,new Vector2(moveDelta.x,0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null){
-            //Make this thing move
-        transform.Translate(moveDelta.x * Time.deltaTime,0,0);
-        }
-
+        transform.localPosition = pos;
+        transform.localScale = scale;
 
     }
+
+    private bool IsGrounded(){
+        RaycastHit2D raycastHit2d = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size,0f, Vector2.down *1f);
+        Debug.Log(raycastHit2d.collider);
+        return raycastHit2d.collider != null;
+    }
+
+    void CheckPlayerInput(){
+
+        bool input_left = Input.GetKey(KeyCode.LeftArrow);
+        bool input_right = Input.GetKey(KeyCode.RightArrow);
+        bool input_space = Input.GetKey(KeyCode.Space);
+
+        walk = input_left || input_right;
+
+        walk_left = input_left || !input_right;
+        walk_right = !input_left || input_right;
+        jump = input_space;
+    }
+
+
+    
 
 
 }

@@ -15,10 +15,10 @@ public class PickUpBehaviour : MonoBehaviour
         if (pickupallowed && Input.GetKeyDown(KeyCode.E)){
             if (inventory.isFull == true){
 
-                inventory.destoryslot();
                 inventory.currentEquip = itemslot;
             } else{
             inventory.isFull = true;
+            inventory.currentEquip = itemslot;
             }
             inventory.createslot(itemslot);
             Destroy(gameObject);
