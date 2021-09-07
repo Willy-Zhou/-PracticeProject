@@ -5,68 +5,43 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-    private BoxCollider2D boxCollider;
-    public Vector2 velocity;
+    public float speed;
     private Rigidbody2D rigidbody2d;
-    private bool walk, walk_left, walk_right,jump;
+    private float inputHorizontal;
+    private float inputVertical;
+    public LayerMask whatIsRope;
+    public float distance;
+    public bool isClimbing;
 
     private void Start() {
-        boxCollider = GetComponent<BoxCollider2D>();
-        rigidbody2d =transform.GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();
 
     }
 
     private void Update() {
-        // Reset MoveDelta
-        
-            CheckPlayerInput();
+        inputHorizontal = Input.GetAxis("Horizontal");
+        rigidbody2d.velocity = new Vector2(inputHorizontal * speed, rigidbody2d.velocity.y);
 
-            UpdatePlayerPosition();
-    }
-
-    void UpdatePlayerPosition(){
-        Vector3 pos = transform.localPosition;
-        Vector3 scale = transform.localScale;
-
-        if(walk){
-            if(walk_left){
-                pos.x -= velocity.x * Time.deltaTime;
-                scale.x=-1;
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, whatIsRope);
+        if(hitInfo.collider != null){
+            if(Input.GetKeyDown(KeyCode.UpArrow)){
+                isClimbing = true;
             }
-            if(walk_right){
-                pos.x += velocity.x * Time.deltaTime;
-                scale.x = 1;
-            }
-            if (jump){
-                rigidbody2d.velocity = Vector2.up * velocity.y;
-            }
+        } else {
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)){
+            isClimbing = false;
         }
-        transform.localPosition = pos;
-        transform.localScale = scale;
+        }
+        if(isClimbing == true && hitInfo.collider != null){
+            inputVertical = Input.GetAxis("Vertical");
+            rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, inputVertical * speed);
+            rigidbody2d.gravityScale = 0;
+        } else {
+            rigidbody2d.gravityScale = 5;
+        }
+
 
     }
-
-    private bool IsGrounded(){
-        RaycastHit2D raycastHit2d = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size,0f, Vector2.down *1f);
-        Debug.Log(raycastHit2d.collider);
-        return raycastHit2d.collider != null;
-    }
-
-    void CheckPlayerInput(){
-
-        bool input_left = Input.GetKey(KeyCode.LeftArrow);
-        bool input_right = Input.GetKey(KeyCode.RightArrow);
-        bool input_space = Input.GetKey(KeyCode.Space);
-
-        walk = input_left || input_right;
-
-        walk_left = input_left || !input_right;
-        walk_right = !input_left || input_right;
-        jump = input_space;
-    }
-
-
-    
 
 
 }

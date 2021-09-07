@@ -20,7 +20,7 @@ public class Killable : MonoBehaviour
     }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnCollisionEnter2D(Collision2D other){
         bool player = other.gameObject.name == "Player";
         if(player){
 
@@ -28,7 +28,7 @@ public class Killable : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    private void OnCollisionExit2D(Collision2D other){
         bool player = other.gameObject.name == "Player";
         if(player){
 
