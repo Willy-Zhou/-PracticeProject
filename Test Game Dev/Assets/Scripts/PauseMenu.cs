@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    //public PauseMenu pauseMenu; <-no need for this apparently
+    public PauseMenu escpauseMenu; 
+    //no need for this apparently
 
     //Initialize
     void Start(){
@@ -17,9 +18,13 @@ public class PauseMenu : MonoBehaviour
         //if esc is pressed, make pause menu active
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenu.SetActive(true);
+            pauseMenu.SetActive(!pauseMenu.activeSelf); //checks wether itself is true, if true sets to false.
             Time.timeScale = 1f;
         }
+        //if pausemenu is true, set to false
+        //if (pauseMenu.activeSelf)
+
+
 
     }
 
