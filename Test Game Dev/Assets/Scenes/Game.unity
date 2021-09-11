@@ -450,6 +450,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7921593060763314856, guid: 37f1f36c5a8886742af0c12a99ccf3d6, type: 3}
   m_PrefabInstance: {fileID: 7921593061108389056}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &211401484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211401483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac8baea7afaa614ea98540bc9654fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  stoppingDistance: 1
 --- !u!50 &211401488
 Rigidbody2D:
   serializedVersion: 4
@@ -2391,6 +2405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cdcffbb4e910943835f7a260409b72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  escpauseMenu: {fileID: 0}
   pauseMenu: {fileID: 18825091}
 --- !u!1001 &1526484370
 PrefabInstance:
@@ -2409,11 +2424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7132256764113474575, guid: 3a1108160df045f46bbd783a3f05234c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.925
+      value: -0.584
       objectReference: {fileID: 0}
     - target: {fileID: 7132256764113474575, guid: 3a1108160df045f46bbd783a3f05234c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.741
+      value: -0.713
       objectReference: {fileID: 0}
     - target: {fileID: 7132256764113474575, guid: 3a1108160df045f46bbd783a3f05234c, type: 3}
       propertyPath: m_LocalPosition.z
